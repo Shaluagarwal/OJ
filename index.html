@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<style type="text/css">
+	.scrollmargin{
+		height: 500px;
+		text-align :center;
+	}
+	div{
+		display: block;
+	}
+	.ace-twilight{
+		background-color: #141414;
+		color: #F8F8F8;
+	}
+	.ace_editor{overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    font-stretch: normal;
+    font-size: 12px;
+    line-height: normal;
+    font-family: Monaco, Menlo, "Ubuntu Mono", Consolas, source-code-pro, monospace;
+    direction: ltr;
+    text-align: left;
+
+	}
+	.ace_editor{position: relative !important;
+    border: 1px solid lightgray;
+    border-top-color: lightgray;
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-right-color: lightgray;
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-bottom-color: lightgray;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-left-color: lightgray;
+    border-left-style: solid;
+    border-left-width: 1px;
+    border-image-source: initial;
+    border-image-slice: initial;
+    border-image-width: initial;
+    border-image-outset: initial;
+    border-image-repeat: initial;
+    margin: auto;
+    margin-top: auto;
+    margin-right: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    height: 200px;
+    width: 80%;
+
+
+	}
+	pre{
+    display: block;
+    white-space: pre;
+}
+</style>
+  	<title>
+	editor
+	</title>
+</head>
+<body>
+ <script type="text/javascript" src="scripts/jquery-3.1.0.js"></script>
+<div class="scrollmargin"></div>
+<pre id="editor" class="ace_editor ace-twilight ace_dark"></pre>
+<div class="scrollmargin"></div>
+    <script type="text/javascript" src="ace-builds-master/ace-builds-master/src/ace.js"></script>
+	<script type="text/javascript" src="ace-builds-master/ace-builds-master/src/ext-themelist.js"></script>
+	<script type="text/javascript">
+		 var editor = ace.edit("editor");
+	    editor.setTheme("ace/theme/twilight");
+	    editor.session.setMode("ace/mode/c_cpp");
+	   editor.setValue("#include<bitsstdc++.h>\nusing namespace std;\nint main()\n{\nreturn 0;\n}");
+	   function reset()
+		{
+			if(confirm("Resetting the code will delete all your saved work.Do you want to continue?"))
+			{
+			  editor.setValue("#include<bitsstdc++.h>\nusing namespace std;\nint main()\n{\nreturn 0;\n}");
+			}
+		}
+        function save()
+		{
+            var str=editor.getValue();
+		    $.ajax({
+		     type: "POST",
+		    url: "index.php",
+		    data: {'save_code':str},
+		     success: function(result) {alert("code has been saved");}
+		});
+
+		}
+		 function submit()
+		{
+            var str=editor.getValue();
+		    $.ajax({
+		     type: "POST",
+		    url: "index.php",
+		    data: {'submit_code':str},
+		     success: function(result) {alert("code has been saved");}
+		});
+
+		}
+		
+		// function submit()
+		// {
+			
+		// }
+	</script>
+	<input  type="submit" name="save" value="save" onclick="save()">
+	<input type="submit" name="reset" value="reset" onclick="reset()">
+	<input type="submit" name="submit" value="submit" onclick="submit()">
+	<p id="dup"></p>
+
+</body>
